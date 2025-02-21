@@ -1,10 +1,21 @@
-// backend/src/routes/propertyRoutes.ts
+// src/routes/propertyRoutes.ts
 
-import express from 'express';
-import { createPropertyAnalysis } from '../controllers/propertyController';
+import { Router } from 'express';
+import { validatePropertyInput } from '../middleware/validateProperty';
+import {
+  createPropertyAnalysis,
+  getProperties,
+  getPropertyById,
+  updateProperty,
+  deleteProperty
+} from '../controllers/propertyController';
 
-const router = express.Router();
+const router = Router();
 
-router.post('/', createPropertyAnalysis);
+router.post('/', validatePropertyInput, createPropertyAnalysis);
+router.get('/', getProperties);
+router.get('/:id', getPropertyById);
+router.put('/:id', validatePropertyInput, updateProperty);
+router.delete('/:id', deleteProperty);
 
 export default router;
